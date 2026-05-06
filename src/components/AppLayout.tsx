@@ -3,13 +3,16 @@ import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/AppSidebar';
 import { MobileNav } from '@/components/MobileNav';
 import { useAuth } from '@/contexts/AuthContext';
+import { useOnboarding } from '@/contexts/OnboardingContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect } from 'react'; // ✅ added
+import { OnboardingGuide } from '@/components/OnboardingGuide';
 
 export function AppLayout() {
   const { user, loading } = useAuth();
+  const { active: onboardingActive } = useOnboarding();
   const isMobile = useIsMobile();
   const location = useLocation();
 
@@ -53,6 +56,7 @@ export function AppLayout() {
                 <Outlet />
               </motion.div>
             </AnimatePresence>
+            {onboardingActive ? <OnboardingGuide /> : null}
           </main>
 
           {isMobile && <MobileNav />}
