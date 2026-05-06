@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;        /* white */
+    --foreground: 222 47% 11%;      /* dark text */
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 152 76% 36%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 46%;
+
+    --accent: 187 92% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 152 76% 36%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 222 59% 5%;
+    --success: 152 76% 36%;
+    --success-foreground: 222 59% 5%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(152 76% 36%), hsl(187 92% 45%));
+    --gradient-glow: linear-gradient(135deg, hsl(152 76% 36% / 0.15), hsl(187 92% 45% / 0.15));
+    
+    /* Neutralized Glass Variables */
+    --glass-bg: hsla(0, 0%, 100%, 0.45);
+    --glass-border: hsla(0, 0%, 100%, 0.3);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 18px;
+  }
+}
+
+@layer utilities {
+  /* Restored to White Glass */
+  .glass {
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.04);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  /* Restored to White Card */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(38, 194, 129, 0.18);
+    box-shadow: 0 10px 38px rgba(38, 94, 58, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Kept Green Interactive Hover */
+  .glass-card:hover {
+    background: rgba(219, 255, 231, 0.9);
+    border-color: rgba(38, 194, 129, 0.28);
+    box-shadow: 0 14px 48px rgba(38, 94, 58, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+  }
+
+  .glass-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Kept Vibrant Hover State */
+  .glass-hover:hover {
+    background: hsla(185, 100%, 76%, 0.6);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-primary {
+    box-shadow: 0 0 20px hsl(152 76% 36% / 0.2), 0 0 60px hsl(152 76% 36% / 0.1);
+  }
+
+  .glow-emerald {
+    box-shadow: 0 0 8px hsl(152 76% 36% / 0.4);
+  }
+
+  .glow-amber {
+    box-shadow: 0 0 8px hsl(38 92% 50% / 0.4);
+  }
+
+  .glow-rose {
+    box-shadow: 0 0 8px hsl(0 72% 51% / 0.4);
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Preserved Mesh Animations */
+@keyframes mesh-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(50px, -30px) scale(1.1); }
+  50% { transform: translate(-20px, 40px) scale(0.95); }
+  75% { transform: translate(30px, 20px) scale(1.05); }
+}
+@keyframes mesh-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-40px, 30px) scale(1.05); }
+  50% { transform: translate(30px, -20px) scale(1.1); }
+  75% { transform: translate(-20px, -30px) scale(0.95); }
+}
+@keyframes mesh-float-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, 40px) scale(1.1); }
+  66% { transform: translate(-30px, -20px) scale(0.9); }
+}
+
+.animate-mesh-1 { animation: mesh-float-1 20s ease-in-out infinite; }
+.animate-mesh-2 { animation: mesh-float-2 25s ease-in-out infinite; }
+.animate-mesh-3 { animation: mesh-float-3 22s ease-in-out infinite; }
