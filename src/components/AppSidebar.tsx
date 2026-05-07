@@ -1,6 +1,8 @@
 import { LayoutDashboard, History, GitCompareArrows, Settings, LogOut, Zap, Brain, BookOpen } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { NavLink } from '@/components/NavLink';
 import { useAuth } from '@/contexts/AuthContext';
+import { handleLogout } from '@/lib/logout';
 import {
   Sidebar,
   SidebarContent,
@@ -15,6 +17,7 @@ import {
 
 const navItems = [
   { title: 'Dashboard', url: '/dashboard', icon: LayoutDashboard },
+  { title: 'Advanced Analytics', url: '/analytics', icon: Zap },
   { title: 'Founder Quiz', url: '/quiz', icon: Brain },
   { title: 'History', url: '/history', icon: History },
   { title: 'Compare', url: '/compare', icon: GitCompareArrows },
@@ -65,30 +68,40 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="px-3 py-4 border-t border-border/30">
-        {user && (
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-muted/50 flex items-center justify-center flex-shrink-0 text-xs font-bold text-primary">
-              {(user.user_metadata?.full_name?.[0] || user.email?.[0] || '?').toUpperCase()}
-            </div>
-            {!collapsed && (
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium text-foreground truncate">
-                  {user.user_metadata?.full_name || 'User'}
-                </p>
-                <p className="text-[10px] text-muted-foreground truncate">{user.email}</p>
-              </div>
-            )}
-            <button
-              onClick={signOut}
-              className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/30 transition flex-shrink-0"
-              title="Sign out"
-            >
-              <LogOut className="h-3.5 w-3.5" />
-            </button>
+      <SidebarFooter className="px-3 py-4 border-t border-border/30 bg-sidebar/50 backdrop-blur-sm">
+  {user && (
+    <div className="flex flex-col gap-4 w-full">
+      {/* 1. User Identity Branding */}
+      <div className="flex items-center gap-3 px-2">
+        <div className="h-9 w-9 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-xs font-bold text-primary shadow-sm">
+          {(user.user_metadata?.full_name?.[0] || user.email?.[0] || 'U').toUpperCase()}
+        </div>
+        {!collapsed && (
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-semibold text-foreground truncate">
+              {user.user_metadata?.full_name || 'Project Lead'}
+            </p>
+            <p className="text-[10px] text-muted-foreground truncate opacity-70">{user.email}</p>
           </div>
         )}
-      </SidebarFooter>
+      </div>
+
+      {/* 2. Tactical Reset Button (Logout) */}
+      <button
+        onClick={handleLogout}
+        className="flex items-center justify-between px-4 py-2.5 w-full text-xs font-medium 
+                   bg-rose-500/5 hover:bg-rose-500/15 text-rose-400 hover:text-rose-500 
+                   border border-rose-500/10 hover:border-rose-500/30 transition-all rounded-xl group"
+      >
+        <div className="flex items-center gap-2">
+          <LogOut size={16} className="group-hover:-translate-x-1 transition-transform" />
+          <span>Log Out</span>
+        </div>
+        <span className="text-[9px] uppercase tracking-tighter opacity-50"></span>
+      </button>
+    </div>
+  )}
+</SidebarFooter>
     </Sidebar>
   );
 }

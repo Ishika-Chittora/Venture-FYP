@@ -20,8 +20,12 @@ import { KanbanActionPlan } from '@/components/KanbanActionPlan';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { ExplainableAI } from '@/components/Explainableai';
 import { MoneyRain } from '@/components/MoneyRain';
+import { DashboardAnalyticsPanel } from '@/components/DashboardAnalyticsPanel';
 import { buildFallbackResult } from '@/utils/resultNormalizer';
 import type { IdeaInput } from '@/types/evaluation';
+// Add this to your imports at the top
+import { saveEvaluation } from '@/services/evaluationStorage';
+import { toast } from 'sonner';
 
 const Index = () => {
   const {
@@ -59,24 +63,39 @@ const Index = () => {
     : null
 
   const handleSubmit = useCallback(
-    async (formInput: IdeaInput) => {
-      startEvaluation(formInput);
+  async (formInput: IdeaInput) => {
+    startEvaluation(formInput);
+    try {
+      const rawData = await runEvaluation(formInput, setStep);
+      
+      // 1. Set the local result first for UI responsiveness
+      setResult(rawData);
+      setStep('complete');
+
+      // 2. TRIGGER THE CLOUD SAVE
       try {
-        const rawData = await runEvaluation(formInput, setStep);
-        setResult(rawData);
-        setStep('complete');
-      } catch (err: any) {
-        console.error("Evaluation Error:", err);
-        const fallback = buildFallbackResult({
-          overallScore: 40,
-          burnRate: 25000,
-        }, formInput);
-        setResult(fallback);
-        setStep('complete');
+        await saveEvaluation(formInput, rawData);
+        toast.success("Analysis persisted to cloud history");
+      } catch (saveErr) {
+        console.error("Cloud Save Failed:", saveErr);
+        toast.error("Results shown but not saved to history. Check console.");
       }
-    },
-    [startEvaluation, setStep, setResult]
-  );
+
+    } catch (err: any) {
+      console.error("Evaluation Error:", err);
+      const fallback = buildFallbackResult({
+        overallScore: 40,
+        burnRate: 25000,
+      }, formInput);
+      setResult(fallback);
+      setStep('complete');
+      
+      // Optional: Save the fallback result as well
+      await saveEvaluation(formInput, fallback);
+    }
+  },
+  [startEvaluation, setStep, setResult]
+);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -177,13 +196,16 @@ const Index = () => {
             <ExplainableAI result={normalized} />
           </ErrorBoundary>
 
-          {/* Original Confidence meter */}
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <ConfidenceMeter score={normalized.confidenceScore} />
-          </motion.div>
+          <div className="grid gap-6 xl:grid-cols-[1fr_0.7fr]">
+            <div className="space-y-6">
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <ConfidenceMeter score={normalized.confidenceScore} />
+              </motion.div>
 
-          {/* Original Score overview */}
-          <ScoreOverview result={normalized} latency={latency} />
+              <ScoreOverview result={normalized} latency={latency} />
+            </div>
+            <DashboardAnalyticsPanel />
+          </div>
 
           {/* Original Radar + Projection charts */}
           <ErrorBoundary>

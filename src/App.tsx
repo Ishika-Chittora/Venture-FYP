@@ -14,6 +14,7 @@ import ComparePage from "./pages/ComparePage";
 import SettingsPage from "./pages/SettingsPage";
 import FounderQuizPage from "./pages/FounderQuizPage";
 import KnowledgeBasePage from "./pages/KnowledgeBasePage";
+import GrowthLabPage from "./pages/GrowthLabPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
               <Route path="/auth" element={<Auth />} />
               <Route element={<AppLayout />}>
                 <Route path="/dashboard" element={<Index />} />
+                <Route path="/analytics" element={<GrowthLabPage />} />
                 <Route path="/history" element={<HistoryPage />} />
                 <Route path="/compare" element={<ComparePage />} />
                 <Route path="/settings" element={<SettingsPage />} />

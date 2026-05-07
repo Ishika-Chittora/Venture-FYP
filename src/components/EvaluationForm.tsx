@@ -20,6 +20,7 @@ export function EvaluationForm({ onSubmit, isLoading }: Props) {
     monthlyBurn: 50000,
     teamSize: 5,
     pricePerUser: 50,
+    fundingAmount: 2200000,
   });
 
   const update = <K extends keyof IdeaInput>(key: K, val: IdeaInput[K]) =>
@@ -132,6 +133,17 @@ export function EvaluationForm({ onSubmit, isLoading }: Props) {
             className="w-full rounded-lg bg-muted/50 border border-border px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition"
             min={0}
             step={0.01}
+          />
+        </div>
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium text-muted-foreground">Funding Amount ($)</label>
+          <input
+            type="number"
+            value={form.fundingAmount}
+            onChange={(e) => update('fundingAmount', Number(e.target.value))}
+            className="w-full rounded-lg bg-muted/50 border border-border px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition"
+            min={0}
+            step={10000}
           />
         </div>
       </div>

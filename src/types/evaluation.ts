@@ -7,6 +7,7 @@ export interface IdeaInput {
   monthlyBurn: number;
   teamSize: number;
   pricePerUser: number;
+  fundingAmount: number;
 }
 
 export interface Competitor {
