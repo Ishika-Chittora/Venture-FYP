@@ -138,7 +138,7 @@ export default function GrowthLabPage() {
             </ResponsiveContainer>
           </div>
           <p className="mt-4 text-sm leading-6 text-muted-foreground">
-            This gauge compares calculated CAC payback velocity against a 12-month VC threshold. Red indicates a slower than ideal payback schedule.
+            This gauge compares calculated CAC payback velocity against a 12-month VC threshold.
           </p>
         </div>
       </div>

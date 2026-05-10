@@ -441,39 +441,59 @@ export default function KnowledgeBasePage() {
                     The final score is computed using a weighted evaluation of core startup metrics. Each dimension contributes proportionally based on its importance.
                   </p>
 
-                  <div className="overflow-hidden rounded-lg border border-border/30 mb-4">
-                    <table className="w-full text-xs">
-                      <thead className="bg-muted/40 text-foreground">
-                        <tr>
-                          <th className="p-2 text-left">Factor</th>
-                          <th className="p-2 text-left">Details</th>
-                          <th className="p-2 text-left">Weight</th>
-                        </tr>
-                      </thead>
-                      <tbody className="text-muted-foreground">
-                        <tr className="border-t border-border/20">
-                          <td className="p-2">Financial Health</td>
-                          <td className="p-2">Burn rate, runway, revenue stability</td>
-                          <td className="p-2 text-primary font-medium">30%</td>
-                        </tr>
-                        <tr className="border-t border-border/20">
-                          <td className="p-2">Market Potential</td>
-                          <td className="p-2">TAM, SAM, growth opportunity</td>
-                          <td className="p-2 text-primary font-medium">25%</td>
-                        </tr>
-                        <tr className="border-t border-border/20">
-                          <td className="p-2">Product Strength</td>
-                          <td className="p-2">Moat, differentiation, retention</td>
-                          <td className="p-2 text-primary font-medium">25%</td>
-                        </tr>
-                        <tr className="border-t border-border/20">
-                          <td className="p-2">Execution</td>
-                          <td className="p-2">Team, traction, growth signals</td>
-                          <td className="p-2 text-primary font-medium">20%</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                        <div className="overflow-hidden rounded-lg border border-border/30 mb-4">
+        <table className="w-full text-xs">
+          <thead className="bg-muted/40 text-foreground">
+            <tr>
+              <th className="p-2 text-left">Factor</th>
+              <th className="p-2 text-left">What It Measures</th>
+              <th className="p-2 text-left">Weight</th>
+            </tr>
+          </thead>
+
+          <tbody className="text-muted-foreground">
+            <tr className="border-t border-border/20">
+              <td className="p-2">Market Potential</td>
+              <td className="p-2">
+                TAM, market demand, industry growth, timing
+              </td>
+              <td className="p-2 text-primary font-medium">30%</td>
+            </tr>
+
+            <tr className="border-t border-border/20">
+              <td className="p-2">Financial Strength</td>
+              <td className="p-2">
+                Burn rate, runway, monetization sustainability
+              </td>
+              <td className="p-2 text-primary font-medium">25%</td>
+            </tr>
+
+            <tr className="border-t border-border/20">
+              <td className="p-2">Competitive Edge</td>
+              <td className="p-2">
+                Moat, differentiation, market positioning
+              </td>
+              <td className="p-2 text-primary font-medium">15%</td>
+            </tr>
+
+            <tr className="border-t border-border/20">
+              <td className="p-2">Technical Feasibility</td>
+              <td className="p-2">
+                Scalability, implementation complexity, execution risk
+              </td>
+              <td className="p-2 text-primary font-medium">10%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 text-xs text-primary font-medium">
+        Overall Score =
+        (Market × 0.30) +
+        (Finance × 0.25) +
+        (Competition × 0.15) +
+        (Technical × 0.10)
+      </div>
 
                   <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 text-xs text-primary font-medium">
                     Final Score = Σ (Metric Score × Weight)
